@@ -103,3 +103,8 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+src/Kitchen Chaos/Library/
+src/Kitchen Chaos/Temp/
+src/Kitchen Chaos/Logs/
+src/Kitchen Chaos/UserSettings/
