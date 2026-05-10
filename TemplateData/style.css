@@ -1,7 +1,7 @@
 body { padding: 0; margin: 0; background: #000; overflow: hidden; }
 
 #unity-container { position: fixed; width: 100%; height: 100%; top: 0; left: 0; }
-#unity-container.unity-desktop { width: 100%; height: 100%; transform: none; left: 0; top: 0; }
+#unity-container.unity-desktop { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
 #unity-container.unity-mobile { position: fixed; width: 100%; height: 100%; }
 
 #unity-canvas { width: 100% !important; height: calc(100% - 38px) !important; background: #231F20; display: block; }
