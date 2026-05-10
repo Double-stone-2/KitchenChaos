@@ -44,22 +44,20 @@ public class Player : MonoBehaviour , IKitchenObjectParent
 
     private void GameInput_OnInteractAlternateAction(object sender, System.EventArgs e)
     {
-        if (!KitchenGameManager.Instance.IsGamePlaying()) return;
+        if (!IsInteractionAllowed()) return;
+        if (selectedCounter == null) return;
+        if (TutorialManager.Instance != null && !TutorialManager.Instance.CanInteractAlternate(selectedCounter)) return;
 
-        if (selectedCounter != null)
-        {
-            selectedCounter.InteractAlternate(this);
-        }
+        selectedCounter.InteractAlternate(this);
     }
 
     private void GameInput_OnInteractAction(object sender, System.EventArgs e)
     {
-        if (!KitchenGameManager.Instance.IsGamePlaying()) return;
+        if (!IsInteractionAllowed()) return;
+        if (selectedCounter == null) return;
+        if (TutorialManager.Instance != null && !TutorialManager.Instance.CanInteract(selectedCounter)) return;
 
-        if (selectedCounter != null)
-        {
-            selectedCounter.Interact(this);
-        }
+        selectedCounter.Interact(this);
     }
 
     private void Update()
@@ -192,5 +190,11 @@ public class Player : MonoBehaviour , IKitchenObjectParent
     public bool HasKitchenObject()
     {
         return kitchenObject != null;
+    }
+
+    private bool IsInteractionAllowed()
+    {
+        if (TutorialManager.Instance != null) return TutorialManager.Instance.IsActive;
+        return KitchenGameManager.Instance.IsGamePlaying();
     }
 }

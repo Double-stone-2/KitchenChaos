@@ -7,6 +7,7 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField]  private Button playButton;
     [SerializeField]  private Button quitButton;
     [SerializeField]  private Button settingsButton;
+    [SerializeField]  private Button tutorialButton;
 
     private void Awake()
     {
@@ -23,6 +24,10 @@ public class MainMenuUI : MonoBehaviour
         settingsButton.onClick.AddListener(() =>
         {
            OptionsUI.Instance.Show();
+        });
+        tutorialButton.onClick.AddListener(() =>
+        {
+            Loader.Load(Loader.SceneName.TutorialScene);
         });
     }
 

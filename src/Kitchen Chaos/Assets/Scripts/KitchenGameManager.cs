@@ -26,6 +26,7 @@ public class KitchenGameManager : MonoBehaviour
 
     //[SerializeField] private float waitingToStartTimer = 1f;
     [SerializeField] private float countdownToStartTimer = 3f;
+    [SerializeField] private bool startInGamePlayingState;
 
     private State state;
     private bool  isGamePaused;
@@ -38,7 +39,7 @@ public class KitchenGameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        state = State.WaitingToStart;
+        state = startInGamePlayingState ? State.GamePlaying : State.WaitingToStart;
         lives = StartingLives;
     }
 
@@ -46,9 +47,13 @@ public class KitchenGameManager : MonoBehaviour
     {
         GameInput.Instance.OnPauseAction += OnPauseActionInput;
         GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
-        DeliveryManager.Instance.OnRecipeFailed += OnRecipeFailed;
-        DeliveryManager.Instance.OnRecipeSuccess += OnRecipeSuccess;
-        DeliveryManager.Instance.OnRecipeExpired += OnRecipeExpired;
+
+        if (DeliveryManager.Instance != null)
+        {
+            DeliveryManager.Instance.OnRecipeFailed  += OnRecipeFailed;
+            DeliveryManager.Instance.OnRecipeSuccess += OnRecipeSuccess;
+            DeliveryManager.Instance.OnRecipeExpired += OnRecipeExpired;
+        }
     }
 
     private void GameInput_OnInteractAction(object sender, EventArgs e)
@@ -169,9 +174,12 @@ public class KitchenGameManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        DeliveryManager.Instance.OnRecipeFailed  -= OnRecipeFailed;
-        DeliveryManager.Instance.OnRecipeSuccess -= OnRecipeSuccess;
-        DeliveryManager.Instance.OnRecipeExpired -= OnRecipeExpired;
+        if (DeliveryManager.Instance != null)
+        {
+            DeliveryManager.Instance.OnRecipeFailed  -= OnRecipeFailed;
+            DeliveryManager.Instance.OnRecipeSuccess -= OnRecipeSuccess;
+            DeliveryManager.Instance.OnRecipeExpired -= OnRecipeExpired;
+        }
     }
 
 }
